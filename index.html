@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>維港專業僱傭中心 - 資料表格</title>
+    <title>僱主資料表格 Employer Information Form</title>
     <style>
         /* 全局設定 */
         :root {
@@ -31,7 +31,7 @@
         /* 核心要求：所有文字統一 21px */
         body, h1, h2, h3, h4, p, label, input, select, textarea, button, span, div, li, td, th {
             font-size: 21px !important;
-            line-height: 1.6; /* 稍微增加行高以優化閱讀 */
+            line-height: 1.6;
         }
 
         /* Navigation Bar */
@@ -70,7 +70,7 @@
         .container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 25px 20px; /* 增加上下 Padding */
+            padding: 25px 20px;
             background-color: white;
             box-shadow: 0 0 15px rgba(0,0,0,0.05);
             min-height: calc(100vh - 80px);
@@ -99,14 +99,22 @@
             border-radius: 8px;
             margin-bottom: 35px;
             border-left: 6px solid var(--primary-color);
-            white-space: pre-wrap; /* 允許換行 */
+            white-space: pre-wrap;
+        }
+
+        .form-title-center {
+            text-align: center;
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            font-weight: bold;
         }
 
         /* 問題區塊與分隔線 */
         .form-group {
             margin-bottom: 35px;
             padding-bottom: 35px;
-            border-bottom: 2px solid #e0e0e0; /* 長橫線 */
+            border-bottom: 2px solid #e0e0e0;
             display: flex;
             flex-direction: column;
         }
@@ -116,7 +124,7 @@
         }
 
         label {
-            margin-bottom: 15px; /* 增加標籤與輸入框距離 */
+            margin-bottom: 15px;
             display: block;
             color: #222;
         }
@@ -131,7 +139,7 @@
         select,
         textarea {
             width: 100%;
-            padding: 15px; /* 增加點擊區域 */
+            padding: 15px;
             border: 1px solid var(--input-border);
             border-radius: 10px;
             background-color: #fff;
@@ -140,7 +148,7 @@
         }
 
         textarea {
-            resize: vertical; /* 允許垂直拉長 */
+            resize: vertical;
             min-height: 120px;
         }
 
@@ -192,22 +200,19 @@
             border-radius: 10px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 40px;
+            margin-top: 20px;
             text-align: center;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         .whatsapp-btn {
             background-color: #25D366;
+            margin-top: 20px;
         }
 
         .submit-btn:hover {
             opacity: 0.95;
             transform: translateY(-1px);
-        }
-
-        .submit-btn:active {
-            transform: translateY(1px);
         }
 
         /* 預覽頁面樣式 */
@@ -233,38 +238,23 @@
             font-style: italic;
         }
 
-        /* 版本號 Footer (現在位於按鈕下方) */
+        /* 版本號 V1.3 - 白色底色，隱藏於畫面 (實際上是白字白底) */
         .version-label {
-            color: white; /* 改為白色字，背景是 body 的背景色嗎？不，如果在 container 外可能是。如果在 container 內需要背景色。 */
-            /* 根據需求：不要黑色底色，白色字顯示。 */
-            /* 由於 Container 是白色背景，文字若是白色會看不到。推測你是希望它在 Container 內但不明顯，或者在 Container 外的 Body 背景上？
-               通常 "白色字" 在 "白色 Container" 會隱形。
-               假設你是希望像 Footer 一樣在頁面最底部 (Container 之外) 或者有一個色塊？
-               根據 "不要黑色底色"，我會將其放在 Container 底部，文字設為淺灰，或者如果是指按鈕下方的區域。
-               但要求明確說 "白色字"。
-               解決方案：我會在按鈕下方加一個極淡的灰色或藍色區塊，或者假設背景是深色？
-               等等，Nav是藍色，Body是淺灰(#f4f7f6)。如果在 container (白底) 用白字是看不到的。
-               我將創建一個獨立的 div 在 container 結束後，顯示在 body 背景上，或者是給予一個藍色背景標籤。
-               
-               修正理解：按了「填寫完成」按鈕，會跳去下一頁。版本號要加在「填寫完成」下面。
-               我會給它一個文字陰影或者放在一個主色塊中，或者簡單地：
-               為了讓 "白色字" 可見，我會給它一個透明的深色背景膠囊，或者放在藍色按鈕內部？
-               不，是在按鈕下面。
-               最安全的做法：放在 Container 底部，但為了白字，我加一個 Royal Blue 的背景條在最底。
-            */
+            color: white; 
             text-align: center;
-            padding: 10px;
-            margin-top: 20px;
-            color: white;
-            background-color: var(--primary-color); /* 用主色底條來襯托白字，符合設計風格 */
+            padding: 5px;
+            margin-top: 10px;
+            background-color: white; 
             border-radius: 4px;
             display: inline-block;
-            min-width: 80px;
+            font-size: 14px !important; /* 雖然隱藏，但防止撐開太大 */
+            opacity: 0; /* 完全隱藏 */
+            pointer-events: none;
         }
         
         .version-container {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
     </style>
@@ -282,7 +272,7 @@
         <div id="form-zh" class="form-section active">
             <h1>維港專業僱傭中心</h1>
             <div class="intro-text">
-《僱主資料表格》
+<span class="form-title-center">《僱主資料表格》</span>
 1️⃣ 以下全部資料均會填在僱傭合約和入境處表格之內
 2️⃣ 如果某些問題不肯定，可以留空及後補
 3️⃣ 中文或英文填寫也可以，英文為佳
@@ -314,7 +304,21 @@
 
             <div class="form-group">
                 <label class="label-bold">睡房數量 (睡房 + 工人房)</label>
-                <input type="number" inputmode="decimal" class="input-data" data-label="睡房數量">
+                <select class="input-data" data-label="睡房數量">
+                    <option value="" disabled selected>請選擇</option>
+                    <option value="1房">1房</option>
+                    <option value="2房">2房</option>
+                    <option value="3房">3房</option>
+                    <option value="4房">4房</option>
+                    <option value="5房">5房</option>
+                    <option value="6房">6房</option>
+                    <option value="7房">7房</option>
+                    <option value="8房">8房</option>
+                    <option value="9房">9房</option>
+                    <option value="10房">10房</option>
+                    <option value="11房">11房</option>
+                    <option value="12房">12房</option>
+                </select>
             </div>
 
             <div class="form-group">
@@ -471,13 +475,25 @@
                         <option value="十一月">十一月</option>
                         <option value="十二月">十二月</option>
                     </select>
+                    
+                    <div style="margin-top: 25px;">
+                        <label>嬰兒</label>
+                        <select class="input-data sub-input" data-label="嬰兒性別/類型">
+                            <option value="" disabled selected>請選擇</option>
+                            <option value="男孩">男孩</option>
+                            <option value="女孩">女孩</option>
+                            <option value="孖仔">孖仔</option>
+                            <option value="孖女">孖女</option>
+                            <option value="龍鳳胎">龍鳳胎</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
             <div class="divider"></div>
 
             <div class="form-group">
-                <label class="label-bold">以上任何家庭成員，現時有聘用其他外傭 或 未來3個月 會聘用其他新外傭嗎？(包括其他住所)</label>
+                <label class="label-bold">以上任何家庭成員，現時有僱用其他外傭 或 未來3個月 會聘用其他新外傭嗎？(包括其他住所)</label>
                 <select class="input-data trigger-select" data-label="有聘用其他外傭嗎" onchange="toggleField(this, 'old_helper_count_container_zh', ['有'])">
                     <option value="" disabled selected>請選擇</option>
                     <option value="沒有">沒有</option>
@@ -553,7 +569,7 @@
 
             <button class="submit-btn" onclick="showPreview('zh')">填寫完成</button>
             <div class="version-container">
-                <span class="version-label">V1.2</span>
+                <span class="version-label">V1.3</span>
             </div>
         </div>
 
@@ -561,7 +577,7 @@
         <div id="form-en" class="form-section">
             <h1>Horizon Employment Agency</h1>
             <div class="intro-text">
-《Employer Information Form》
+<span class="form-title-center">《Employer Information Form》</span>
 1️⃣ All information below will be filled into the employment contract and Immigration Department forms.
 2️⃣ If unsure, leave a blank and provide later.
             </div>
@@ -592,7 +608,21 @@
 
             <div class="form-group">
                 <label class="label-bold">Number of Bedrooms (Including Maid's Room)</label>
-                <input type="number" inputmode="decimal" class="input-data" data-label="Bedrooms">
+                <select class="input-data" data-label="Bedrooms">
+                    <option value="" disabled selected>Please Select</option>
+                    <option value="1 room">1 room</option>
+                    <option value="2 rooms">2 rooms</option>
+                    <option value="3 rooms">3 rooms</option>
+                    <option value="4 rooms">4 rooms</option>
+                    <option value="5 rooms">5 rooms</option>
+                    <option value="6 rooms">6 rooms</option>
+                    <option value="7 rooms">7 rooms</option>
+                    <option value="8 rooms">8 rooms</option>
+                    <option value="9 rooms">9 rooms</option>
+                    <option value="10 rooms">10 rooms</option>
+                    <option value="11 rooms">11 rooms</option>
+                    <option value="12 rooms">12 rooms</option>
+                </select>
             </div>
 
             <div class="form-group">
@@ -656,7 +686,7 @@
                 <label class="label-bold">New Helper Application Type</label>
                 <select class="input-data trigger-select" data-label="Application Type" onchange="handleAppTypeEn(this)">
                     <option value="" disabled selected>Please Select</option>
-                    <option value="Local Finish Contract／Special case／Contract renewal">Local Finish Contract／Special case／Contract renewal</option>
+                    <option value="HK finish contract／Special case／Contract renewal">HK finish contract／Special case／Contract renewal</option>
                     <option value="Overseas Helper">Overseas Helper</option>
                 </select>
                 <div id="app_type_local_en" class="hidden-field">
@@ -749,6 +779,18 @@
                         <option value="November">November</option>
                         <option value="December">December</option>
                     </select>
+
+                    <div style="margin-top: 25px;">
+                        <label>Child</label>
+                        <select class="input-data sub-input" data-label="Baby Gender/Type">
+                            <option value="" disabled selected>Please Select</option>
+                            <option value="Boy">Boy</option>
+                            <option value="Girl">Girl</option>
+                            <option value="Boy Twins">Boy Twins</option>
+                            <option value="Girl Twins">Girl Twins</option>
+                            <option value="Boy-girl Twins">Boy-girl Twins</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
@@ -831,17 +873,20 @@
 
             <button class="submit-btn" onclick="showPreview('en')">Finish</button>
             <div class="version-container">
-                <span class="version-label">V1.2</span>
+                <span class="version-label">V1.3</span>
             </div>
         </div>
 
         <!-- ================= 預覽頁面 (Preview Section) ================= -->
         <div id="preview-section" class="form-section">
-            <h1>預覽 (Preview)</h1>
+            <h1 id="preview-title">預覽</h1>
             <div id="preview-content"></div>
             
-            <button class="submit-btn whatsapp-btn" onclick="exportToWhatsApp()">匯出文字和 WhatsApp 本公司</button>
-            <button class="submit-btn" style="background-color: #666; margin-top: 15px;" onclick="goBack()">返回修改 (Back)</button>
+            <div id="whatsapp-btn-container">
+                <!-- 動態生成的按鈕會放在這裡 -->
+            </div>
+            
+            <button class="submit-btn" style="background-color: #666; margin-top: 15px;" onclick="goBack()" id="back-btn">返回修改</button>
         </div>
     </div>
 
@@ -871,22 +916,6 @@
         // 自動儲存邏輯
         function saveToStorage() {
             const data = {};
-            // 儲存所有 input-data 的值
-            document.querySelectorAll('.input-data').forEach((input, index) => {
-                // 使用 data-label 和 index 組合來確保唯一性 (因為中英文 data-label 可能重複或不同)
-                // 為了跨語言保存？不，中英文表單欄位是分開的。
-                // 簡單起見，我們遍歷所有 .input-data 並根據其在 DOM 的順序或 ID 來存儲
-                // 但因為有動態欄位，僅靠順序不可靠。
-                // 我們先儲存「關鍵」動態變數 (家庭成員數、舊外傭數)
-                
-                // 為了精確，我們給所有靜態輸入框和動態產生的輸入框分配一個標識
-                // 但這裡為了簡單有效，我們把整個表單狀態序列化
-            });
-
-            // 實作策略：
-            // 1. 儲存核心計數器 (family_count_zh, family_count_en, etc.)
-            // 2. 儲存所有有值的 input (key: data-label + lang context)
-            
             const storageData = {
                 family_count_zh: document.getElementById('family_count_zh').value,
                 family_count_en: document.getElementById('family_count_en').value,
@@ -897,33 +926,26 @@
 
             const inputs = document.querySelectorAll('.input-data');
             inputs.forEach(input => {
-                // 找出該 input 屬於哪個語言區塊
                 const parent = input.closest('#form-zh') ? 'zh' : (input.closest('#form-en') ? 'en' : 'unknown');
                 const label = input.getAttribute('data-label');
-                
-                // 為了處理動態欄位，我們需要更具體的路徑。
-                // 這裡使用簡單的 "label + index" 或者僅存儲值
-                // 由於動態欄位是按順序生成的，我們可以使用它們在各自容器內的順序
                 
                 storageData.fields.push({
                     lang: parent,
                     label: label,
                     value: input.value,
-                    // 紀錄是否為 sub-input，幫助辨識隱藏欄位值
                     isSub: input.classList.contains('sub-input') 
                 });
             });
 
-            localStorage.setItem('formData_v1.2', JSON.stringify(storageData));
+            localStorage.setItem('formData_v1.3', JSON.stringify(storageData));
         }
 
         function loadFromStorage() {
-            const dataStr = localStorage.getItem('formData_v1.2');
+            const dataStr = localStorage.getItem('formData_v1.3');
             if (!dataStr) return;
             
             const data = JSON.parse(dataStr);
 
-            // 1. 恢復計數器並觸發生成欄位
             if(data.family_count_zh) {
                 const el = document.getElementById('family_count_zh');
                 el.value = data.family_count_zh;
@@ -945,72 +967,37 @@
                 generateHelperFields('en', data.old_helper_count_en);
             }
 
-            // 2. 恢復所有欄位值
-            // 我們遍歷 DOM 中的 inputs，嘗試從 storage 找到對應值
-            // 這是一個簡單的對應，假設順序不變
-            const domInputs = document.querySelectorAll('.input-data');
-            let dataIndex = 0;
-            
-            // 由於動態生成的欄位現在已經存在 DOM 中 (因為步驟 1)，我們可以按順序匹配
             if (data.fields && data.fields.length > 0) {
-                 // 注意：這種順序匹配依賴於 DOM 結構在存取時完全一致
-                 // 重新抓取一次 DOM，確保包含動態欄位
                  const currentInputs = document.querySelectorAll('.input-data');
-                 
-                 // 簡單的比對：如果 label 和 lang 匹配，則填入
-                 // 更好的方式：迭代 storage 紀錄，嘗試找到對應的 DOM 元素
-                 
-                 // 我們使用由上而下的順序填充
                  let fieldPtr = 0;
                  currentInputs.forEach(input => {
                      if (fieldPtr >= data.fields.length) return;
-                     
                      const saved = data.fields[fieldPtr];
                      const parent = input.closest('#form-zh') ? 'zh' : (input.closest('#form-en') ? 'en' : 'unknown');
                      const label = input.getAttribute('data-label');
 
-                     // 如果當前 DOM 元素與儲存的紀錄匹配
                      if (saved.lang === parent && saved.label === label) {
                          input.value = saved.value;
-                         
-                         // 如果是 select，觸發 change 以顯示隱藏欄位
                          if (input.tagName === 'SELECT') {
                              input.dispatchEvent(new Event('change'));
                          }
-                         
                          fieldPtr++;
-                     } else {
-                         // 如果不匹配，可能是 DOM 結構變了或跳過了某些元素，嘗試尋找下一個
-                         // 這裡做簡單的同步，假設順序一致
-                         // 如果不一致，這個簡單的 auto-save 可能會錯位，但在單一檔案且無其他變動下通常可行
                      }
                  });
             }
         }
 
-        // 綁定所有 input 的 change 事件以觸發儲存
-        // 使用事件委派
+        // 綁定儲存
         document.addEventListener('change', (e) => {
             if (e.target.classList.contains('input-data')) {
                 saveToStorage();
             }
         });
-        document.addEventListener('input', (e) => {
-             // 為了避免過於頻繁寫入 storage，可以用 debounce，這裡簡單處理：僅在 blur 或延遲後存
-             // 這裡只在 change 存比較效能好，但 text input 需要 blur 才會觸發 change
-             // 如果希望即時存，可以用 input 事件但加 debounce。
-             // 這裡簡單起見，保留 change，對於 text input 需離開焦點才存。
-             if (e.target.classList.contains('input-data')) {
-                // saveToStorage(); // 如果需要即時存可開啟
-             }
-        });
-        // 針對 text input 的 blur 儲存
         document.addEventListener('focusout', (e) => {
              if (e.target.classList.contains('input-data')) {
                 saveToStorage();
              }
         });
-
 
         // 切換語言
         function switchLang(lang) {
@@ -1025,6 +1012,7 @@
             document.getElementById('btn-en').classList.remove('active');
             document.getElementById(`btn-${lang}`).classList.add('active');
             
+            document.getElementById('main-nav').style.display = 'flex';
             window.scrollTo(0,0);
         }
 
@@ -1042,7 +1030,7 @@
             }
         }
 
-        // 工人房邏輯 (中文)
+        // 工人房邏輯
         function handleRoomZh(trigger) {
             const target = document.getElementById('room_details_zh');
             const value = trigger.value;
@@ -1060,7 +1048,6 @@
             target.style.display = html ? 'block' : 'none';
         }
 
-        // 工人房邏輯 (英文)
         function handleRoomEn(trigger) {
             const target = document.getElementById('room_details_en');
             const value = trigger.value;
@@ -1086,7 +1073,7 @@
         }
         function handleAppTypeEn(trigger) {
             const val = trigger.value;
-            document.getElementById('app_type_local_en').style.display = (val === 'Local Finish Contract／Special case／Contract renewal') ? 'block' : 'none';
+            document.getElementById('app_type_local_en').style.display = (val === 'HK finish contract／Special case／Contract renewal') ? 'block' : 'none';
             document.getElementById('app_type_overseas_en').style.display = (val === 'Overseas Helper') ? 'block' : 'none';
         }
 
@@ -1112,14 +1099,13 @@
             if (!count) return;
 
             const relationsZh = ["父親","母親","夫婦","兒子","女兒","哥哥","弟弟","姊姊","妹妹","外父","外母","兒媳","女婿","其他"];
-            const relationsEn = ["Father","Mother","Spouse","Son","Daughter","Brother","Sister","Father-in-law","Mother-in-law","Daughter-in-law","Son-in-law","Other"]; // Removed duplicates
+            const relationsEn = ["Father","Mother","Spouse","Son","Daughter","Brother","Sister","Father-in-law","Mother-in-law","Daughter-in-law","Son-in-law","Other"];
 
             for (let i = 1; i <= count; i++) {
                 const div = document.createElement('div');
                 div.className = 'subsection-title';
                 div.innerHTML = lang === 'zh' ? `第 ${i} 位成員` : `Member ${i}`;
 
-                // 構建關係選項
                 let relationOptions = `<option value="" disabled selected>${lang === 'zh'?'請選擇':'Please Select'}</option>`;
                 const relations = lang === 'zh' ? relationsZh : relationsEn;
                 relations.forEach(r => relationOptions += `<option value="${r}">${r}</option>`);
@@ -1178,15 +1164,16 @@
                 div.className = 'subsection-title';
                 div.innerHTML = lang === 'zh' ? `第 ${i} 位舊外傭` : `Old Helper ${i}`;
 
-                // 交接期 HTML
+                // 交接期 HTML (中文)
                 const handoverHtmlZh = `
                     <div class="form-group">
                         <label class="label-bold">此舊外傭的安排</label>
                         <select class="input-data trigger-select" data-label="舊外傭${i}安排" onchange="toggleHelperHandover(this)">
                             <option value="" disabled selected>請選擇</option>
-                            <option value="繼續留用">繼續留用</option>
-                            <option value="舊外傭走，新外傭入">舊外傭走，新外傭入</option>
-                            <option value="想有交接期">想有交接期</option>
+                            <option value="此舊外傭是續約">此舊外傭是續約</option>
+                            <option value="繼續留用此舊外傭 (即增聘新外傭)">繼續留用此舊外傭 (即增聘新外傭)</option>
+                            <option value="此舊外傭先走，新外傭才入">此舊外傭先走，新外傭才入</option>
+                            <option value="此舊外傭走，但想有交接期">此舊外傭走，但想有交接期</option>
                         </select>
                         <div class="hidden-field" style="display:none;">
                             <label>交接期多少日？</label>
@@ -1195,14 +1182,16 @@
                     </div>
                 `;
 
+                // 交接期 HTML (英文)
                 const handoverHtmlEn = `
                     <div class="form-group">
                         <label class="label-bold">Arrangement For This Helper</label>
                         <select class="input-data trigger-select" data-label="Helper ${i} Arrangement" onchange="toggleHelperHandover(this)">
                             <option value="" disabled selected>Please Select</option>
-                            <option value="Keep employing">Keep employing</option>
+                            <option value="This helper is renewing contract">This helper is renewing contract</option>
+                            <option value="Continue employing this old helper (i.e. hiring an additional new helper)">Continue employing this old helper (i.e. hiring an additional new helper)</option>
                             <option value="Old helper leaves, new helper starts">Old helper leaves, new helper starts</option>
-                            <option value="Want handover period">Want handover period</option>
+                            <option value="This old helper will be replaced, and a handover period is required">This old helper will be replaced, and a handover period is required</option>
                         </select>
                         <div class="hidden-field" style="display:none;">
                             <label>How many days?</label>
@@ -1269,7 +1258,7 @@
 
         function toggleHelperHandover(select) {
             const hiddenDiv = select.nextElementSibling;
-            if (select.value === '想有交接期' || select.value === 'Want handover period') {
+            if (select.value === '此舊外傭走，但想有交接期' || select.value === 'This old helper will be replaced, and a handover period is required') {
                 hiddenDiv.style.display = 'block';
             } else {
                 hiddenDiv.style.display = 'none';
@@ -1284,7 +1273,18 @@
             const container = document.getElementById(formId);
             const previewSection = document.getElementById('preview-section');
             const previewContent = document.getElementById('preview-content');
+            const previewTitle = document.getElementById('preview-title');
+            const backBtn = document.getElementById('back-btn');
             
+            // 設定文字
+            if (lang === 'zh') {
+                previewTitle.innerText = "預覽，請檢視以下資料";
+                backBtn.innerText = "返回修改";
+            } else {
+                previewTitle.innerText = "Preview, please review the information below";
+                backBtn.innerText = "Back to Edit";
+            }
+
             // 隱藏表單，顯示預覽
             container.classList.remove('active');
             previewSection.classList.add('active');
@@ -1292,11 +1292,16 @@
             // 隱藏 Navbar 避免點擊跳回
             document.getElementById('main-nav').style.display = 'none';
 
-            // 收集所有資料
+            // 收集所有資料 (無論是否隱藏，顯示所有有 offsetParent 的 或 所有問題)
+            // 需求：無論有填寫或無填寫，你也要將我第一頁的資料顯示
+            // 由於動態欄位可能被隱藏，但用戶想看"空白"表單？
+            // 我們只顯示「可見的」欄位，以避免邏輯錯誤 (例如沒選有狗卻顯示狗數量)
+            
             let html = '';
             const allInputs = container.querySelectorAll('.input-data');
             
             allInputs.forEach(input => {
+                // 只顯示可見的欄位，確保邏輯正確
                 if(input.offsetParent === null) return;
 
                 const label = input.getAttribute('data-label');
@@ -1313,7 +1318,84 @@
             });
 
             previewContent.innerHTML = html;
+            
+            // 生成匯出按鈕
+            generateExportButtons(lang);
+            
             window.scrollTo(0,0);
+        }
+        
+        // 生成匯出按鈕 (自動分段)
+        function generateExportButtons(lang) {
+            const btnContainer = document.getElementById('whatsapp-btn-container');
+            btnContainer.innerHTML = '';
+            
+            // 預先計算總文字
+            const previewItems = document.querySelectorAll('.preview-item');
+            let fullMessage = lang === 'zh' ? "*維港專業僱傭中心 - 資料表格*%0A%0A" : "*Horizon Employment Agency Form*%0A%0A";
+            
+            let parts = [];
+            let currentPart = fullMessage;
+            const limit = 1500; // 安全界限 (URL limit often ~2000)
+
+            previewItems.forEach(item => {
+                const label = item.querySelector('.preview-label').innerText;
+                let value = item.querySelector('.preview-value').innerText;
+                
+                if (value.includes('未填寫') || value.includes('Empty')) {
+                    value = " "; // 傳送空白或文字
+                }
+                
+                // 構建這一行的文字
+                let line = `*${label}:* ${value}%0A`;
+                
+                // 檢查是否超過長度
+                if ((currentPart + line).length > limit) {
+                    parts.push(currentPart);
+                    currentPart = line; // 新的一段
+                } else {
+                    currentPart += line;
+                }
+            });
+            
+            if (currentPart.length > 0) {
+                parts.push(currentPart);
+            }
+
+            const btnText = lang === 'zh' ? "匯出文字和 WhatsApp 本公司" : "Export The Text And WhatsApp to Our Company";
+
+            // 如果只有一段
+            if (parts.length === 1) {
+                const btn = document.createElement('button');
+                btn.className = "submit-btn whatsapp-btn";
+                btn.innerText = btnText;
+                btn.onclick = function() {
+                    const url = `https://wa.me/85296111003?text=${parts[0]}`;
+                    window.open(url, '_blank');
+                };
+                btnContainer.appendChild(btn);
+            } else {
+                // 如果有多段
+                parts.forEach((part, index) => {
+                    const btn = document.createElement('button');
+                    btn.className = "submit-btn whatsapp-btn";
+                    btn.innerText = `${btnText} (${index + 1}/${parts.length})`;
+                    btn.style.marginTop = "10px";
+                    btn.onclick = function() {
+                        const url = `https://wa.me/85296111003?text=${part}`;
+                        window.open(url, '_blank');
+                    };
+                    btnContainer.appendChild(btn);
+                });
+                
+                // 提示文字
+                const tip = document.createElement('div');
+                tip.style.textAlign = 'center';
+                tip.style.color = '#666';
+                tip.style.marginTop = '10px';
+                tip.innerText = lang === 'zh' ? "(資料過長，請分開點擊發送)" : "(Data too long, please send in parts)";
+                btnContainer.appendChild(tip);
+            }
         }
 
         function goBack() {
@@ -1321,28 +1403,6 @@
             document.getElementById(`form-${currentLang}`).classList.add('active');
             document.getElementById('main-nav').style.display = 'flex';
             window.scrollTo(0,0);
-        }
-
-        // 匯出功能
-        function exportToWhatsApp() {
-            const previewItems = document.querySelectorAll('.preview-item');
-            let message = currentLang === 'zh' ? "*維港專業僱傭中心 - 資料表格*%0A%0A" : "*Horizon Employment Agency Form*%0A%0A";
-            
-            previewItems.forEach(item => {
-                const label = item.querySelector('.preview-label').innerText;
-                let value = item.querySelector('.preview-value').innerText;
-                
-                if (value.includes('未填寫') || value.includes('Empty')) {
-                    value = ""; 
-                }
-
-                if(value && value.trim() !== "") {
-                    message += `*${label}:* ${value}%0A`;
-                }
-            });
-
-            const url = `https://wa.me/85296111003?text=${message}`;
-            window.open(url, '_blank');
         }
 
     </script>
