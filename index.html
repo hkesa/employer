@@ -290,6 +290,7 @@
 1️⃣ 以下全部資料均會填在僱傭合約和入境處表格之內
 2️⃣ 如果某些問題不肯定，可以留空及後補
 3️⃣ 中文或英文填寫也可以，英文為佳
+4️⃣ 填寫完成後，在最底按「預覽」藍色按鈕
             </div>
 
             <button class="clear-btn" onclick="clearData()">清除資料</button>
@@ -583,7 +584,7 @@
                 <textarea class="input-data" data-label="備註" rows="4"></textarea>
             </div>
 
-            <button class="submit-btn" onclick="showPreview('zh')">填寫完成</button>
+            <button class="submit-btn" onclick="showPreview('zh')">預覽</button>
             <div class="version-container">
                 <span class="version-label">V1.5</span>
             </div>
@@ -596,6 +597,7 @@
 <span class="form-title-center">《Employer Information Form》</span>
 1️⃣ All information below will be filled into the employment contract and Immigration Department forms.
 2️⃣ If unsure, leave a blank and provide later.
+3️⃣ After completing the form, click the blue button “Preview” at the bottom.
             </div>
 
             <button class="clear-btn" onclick="clearData()">Clear</button>
@@ -889,7 +891,7 @@
                 <textarea class="input-data" data-label="Remarks" rows="4"></textarea>
             </div>
 
-            <button class="submit-btn" onclick="showPreview('en')">Finish</button>
+            <button class="submit-btn" onclick="showPreview('en')">Preview</button>
             <div class="version-container">
                 <span class="version-label">V1.5</span>
             </div>
@@ -1308,10 +1310,10 @@
             
             // 設定文字
             if (lang === 'zh') {
-                previewTitle.innerText = "預覽，請檢視以下資料";
+                previewTitle.innerText = "預覽，請檢查以下資料，在最底按「匯出文字和 WhatsApp 本公司」綠色按鈕";
                 backBtn.innerText = "返回修改";
             } else {
-                previewTitle.innerText = "Preview, please review the information below";
+                previewTitle.innerText = "Preview, please check the information below, then click the green button “Export text and WhatsApp to our company” at the bottom.";
                 backBtn.innerText = "Back to Edit";
             }
 
