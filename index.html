@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>維港專業僱傭中心 - 資料表格</title>
+    <style>
+        /* 全局設定 */
+        :root {
+            --primary-color: #4169E1; /* Royal Blue */
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+            --input-border: #ccc;
+            --input-focus: #4169E1;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding-top: 80px; /* 留給 Nav Bar 的空間 */
+            color: var(--text-color);
+            padding-bottom: 50px;
+        }
+
+        /* 核心要求：所有文字統一 21px */
+        body, h1, h2, h3, h4, p, label, input, select, textarea, button, span, div, li, td, th {
+            font-size: 21px !important;
+            line-height: 1.6; /* 稍微增加行高以優化閱讀 */
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background-color: var(--primary-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 5px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn.active {
+            background-color: white;
+            color: var(--primary-color);
+        }
+
+        /* 容器 */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 25px 20px; /* 增加上下 Padding */
+            background-color: white;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+            min-height: calc(100vh - 80px);
+            border-radius: 0 0 8px 8px;
+        }
+
+        /* 表單樣式 */
+        .form-section {
+            display: none;
+        }
+        
+        .form-section.active {
+            display: block;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .intro-text {
+            background-color: #e8f0fe;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 35px;
+            border-left: 6px solid var(--primary-color);
+            white-space: pre-wrap; /* 允許換行 */
+        }
+
+        /* 問題區塊與分隔線 */
+        .form-group {
+            margin-bottom: 35px;
+            padding-bottom: 35px;
+            border-bottom: 2px solid #e0e0e0; /* 長橫線 */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group:last-of-type {
+            border-bottom: none;
+        }
+
+        label {
+            margin-bottom: 15px; /* 增加標籤與輸入框距離 */
+            display: block;
+            color: #222;
+        }
+
+        .label-bold {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 15px; /* 增加點擊區域 */
+            border: 1px solid var(--input-border);
+            border-radius: 10px;
+            background-color: #fff;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        textarea {
+            resize: vertical; /* 允許垂直拉長 */
+            min-height: 120px;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--input-focus);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(65, 105, 225, 0.2);
+        }
+
+        /* 隱藏欄位邏輯 */
+        .hidden-field {
+            display: none;
+            margin-top: 25px;
+            padding: 25px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid var(--primary-color);
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .divider {
+            height: 6px;
+            background-color: #f0f0f0;
+            margin: 50px 0;
+            border-radius: 3px;
+        }
+
+        .subsection-title {
+            color: var(--primary-color);
+            margin-top: 50px;
+            margin-bottom: 25px;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 8px;
+            font-weight: bold;
+        }
+
+        /* 按鈕樣式 */
+        .submit-btn {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 40px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .whatsapp-btn {
+            background-color: #25D366;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.95;
+            transform: translateY(-1px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(1px);
+        }
+
+        /* 預覽頁面樣式 */
+        .preview-item {
+            margin-bottom: 25px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+        .preview-label {
+            font-weight: bold;
+            color: #444;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .preview-value {
+            color: #000;
+            white-space: pre-wrap;
+            display: block;
+            padding-left: 5px;
+        }
+        .preview-empty {
+            color: #999;
+            font-style: italic;
+        }
+
+        /* 版本號 Footer (現在位於按鈕下方) */
+        .version-label {
+            color: white; /* 改為白色字，背景是 body 的背景色嗎？不，如果在 container 外可能是。如果在 container 內需要背景色。 */
+            /* 根據需求：不要黑色底色，白色字顯示。 */
+            /* 由於 Container 是白色背景，文字若是白色會看不到。推測你是希望它在 Container 內但不明顯，或者在 Container 外的 Body 背景上？
+               通常 "白色字" 在 "白色 Container" 會隱形。
+               假設你是希望像 Footer 一樣在頁面最底部 (Container 之外) 或者有一個色塊？
+               根據 "不要黑色底色"，我會將其放在 Container 底部，文字設為淺灰，或者如果是指按鈕下方的區域。
+               但要求明確說 "白色字"。
+               解決方案：我會在按鈕下方加一個極淡的灰色或藍色區塊，或者假設背景是深色？
+               等等，Nav是藍色，Body是淺灰(#f4f7f6)。如果在 container (白底) 用白字是看不到的。
+               我將創建一個獨立的 div 在 container 結束後，顯示在 body 背景上，或者是給予一個藍色背景標籤。
+               
+               修正理解：按了「填寫完成」按鈕，會跳去下一頁。版本號要加在「填寫完成」下面。
+               我會給它一個文字陰影或者放在一個主色塊中，或者簡單地：
+               為了讓 "白色字" 可見，我會給它一個透明的深色背景膠囊，或者放在藍色按鈕內部？
+               不，是在按鈕下面。
+               最安全的做法：放在 Container 底部，但為了白字，我加一個 Royal Blue 的背景條在最底。
+            */
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+            color: white;
+            background-color: var(--primary-color); /* 用主色底條來襯托白字，符合設計風格 */
+            border-radius: 4px;
+            display: inline-block;
+            min-width: 80px;
+        }
+        
+        .version-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="main-nav">
+        <button class="nav-btn active" id="btn-zh" onclick="switchLang('zh')">中文</button>
+        <button class="nav-btn" id="btn-en" onclick="switchLang('en')">English</button>
+    </nav>
+
+    <div class="container">
+        <!-- ================= 中文表格 ================= -->
+        <div id="form-zh" class="form-section active">
+            <h1>維港專業僱傭中心</h1>
+            <div class="intro-text">
+《僱主資料表格》
+1️⃣ 以下全部資料均會填在僱傭合約和入境處表格之內
+2️⃣ 如果某些問題不肯定，可以留空及後補
+3️⃣ 中文或英文填寫也可以，英文為佳
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">僱主全名</label>
+                <input type="text" class="input-data" data-label="僱主全名">
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">合約地址 (即新外傭工作及居住地址)</label>
+                <textarea class="input-data" data-label="合約地址"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">住宅類別</label>
+                <select class="input-data" data-label="住宅類別">
+                    <option value="" disabled selected>請選擇</option>
+                    <option value="單層單位">單層單位</option>
+                    <option value="獨立屋">獨立屋</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">住宅面積 (平方呎)</label>
+                <input type="number" inputmode="decimal" class="input-data" data-label="住宅面積">
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">睡房數量 (睡房 + 工人房)</label>
+                <input type="number" inputmode="decimal" class="input-data" data-label="睡房數量">
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">僱主國籍</label>
+                <input type="text" class="input-data" data-label="僱主國籍">
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">職業</label>
+                <input type="text" class="input-data" data-label="職業">
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">僱主平均每月入息</label>
+                <input type="number" inputmode="decimal" class="input-data" data-label="僱主平均每月入息">
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">獨立工人房 (一人房間)</label>
+                <select class="input-data trigger-select" data-label="獨立工人房" onchange="handleRoomZh(this)">
+                    <option value="" disabled selected>請選擇</option>
+                    <option value="有工人房">有工人房</option>
+                    <option value="與小孩同房">與小孩同房</option>
+                    <option value="與長者同房">與長者同房</option>
+                    <option value="與女僱主同房">與女僱主同房</option>
+                    <option value="與另一外傭同房">與另一外傭同房</option>
+                    <option value="其他">其他</option>
+                </select>
+                <div id="room_details_zh" class="hidden-field">
+                    <!-- 動態內容 -->
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">新外傭每月薪金</label>
+                <select class="input-data trigger-select" data-label="新外傭每月薪金" onchange="toggleField(this, 'salary_other_zh', ['其他'])">
+                    <option value="" disabled selected>請選擇</option>
+                    <option value="最低工資">最低工資</option>
+                    <option value="其他">其他</option>
+                </select>
+                <div id="salary_other_zh" class="hidden-field">
+                    <label>請填寫其他薪金</label>
+                    <input type="number" inputmode="decimal" class="input-data sub-input" data-label="自訂薪金">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">新外傭每月膳食津貼</label>
+                <select class="input-data trigger-select" data-label="新外傭每月膳食津貼" onchange="toggleField(this, 'food_allowance_zh', ['有膳食津貼'])">
+                    <option value="" disabled selected>請選擇</option>
+                    <option value="沒有膳津，一起吃">沒有膳津，一起吃</option>
+                    <option value="有膳食津貼">有膳食津貼</option>
+                </select>
+                <div id="food_allowance_zh" class="hidden-field">
+                    <label>請填寫其他膳津金額</label>
+                    <input type="number" inputmode="decimal" class="input-data sub-input" data-label="膳食津貼金額">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">新外傭申請類別</label>
+                <select class="input-data trigger-select" data-label="新外傭申請類別" onchange="handleAppTypeZh(this)">
+                    <option value="" disabled selected>請選擇</option>
+                    <option value="香港完約、特別個案或續約">香港完約、特別個案或續約</option>
+                    <option value="海外外傭">海外外傭</option>
+                </select>
+                <div id="app_type_local_zh" class="hidden-field">
+                    <label class="label-bold">新外傭上班的安排</label>
+                    <select class="input-data sub-input" data-label="上班安排" onchange="handleLocalWorkZh(this)">
+                        <option value="" disabled selected>請選擇</option>
+                        <option value="先上班，後回鄉">先上班，後回鄉</option>
+                        <option value="先回鄉，後上班">先回鄉，後上班</option>
+                    </select>
+                    <div id="local_leave_zh" class="hidden-field">
+                        <label>回去多少天？</label>
+                        <input type="number" inputmode="decimal" class="input-data sub-input" data-label="回鄉天數" placeholder="例如：15天">
+                    </div>
+                </div>
+                <div id="app_type_overseas_zh" class="hidden-field">
+                    <label class="label-bold">新外傭上班的安排</label>
+                    <select class="input-data sub-input" data-label="海外上班安排" onchange="handleOverseasWorkZh(this)">
+                        <option value="" disabled selected>請選擇</option>
+                        <option value="盡快四個月內">盡快四個月內</option>
+                        <option value="安排在某月份飛香港">安排在某月份飛香港</option>
+                    </select>
+                    <div id="overseas_month_zh" class="hidden-field">
+                        <label>什麼月份？</label>
+                        <select class="input-data sub-input" data-label="預計抵港月份">
+                            <option value="" disabled selected>請選擇</option>
+                            <option value="一月">一月</option>
+                            <option value="二月">二月</option>
+                            <option value="三月">三月</option>
+                            <option value="四月">四月</option>
+                            <option value="五月">五月</option>
+                            <option value="六月">六月</option>
+                            <option value="七月">七月</option>
+                            <option value="八月">八月</option>
+                            <option value="九月">九月</option>
+                            <option value="十月">十月</option>
+                            <option value="十一月">十一月</option>
+                            <option value="十二月">十二月</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="form-group">
+                <label class="label-bold">除了你（僱主），還有多少家庭成員（只計算住在合約地址的成員）</label>
+                <select class="input-data" id="family_count_zh" data-label="家庭成員數量" onchange="generateFamilyFields('zh', this.value)">
+                    <option value="" disabled selected>請選擇</option>
+                    <option value="0">0 (只有我)</option>
+                    <option value="1">1 (我+1)</option>
+                    <option value="2">2 (我+2)</option>
+                    <option value="3">3 (我+3)</option>
+                    <option value="4">4 (我+4)</option>
+                    <option value="5">5 (我+5)</option>
+                    <option value="6">6 (我+6)</option>
+                    <option value="7">7 (我+7)</option>
+                    <option value="8">8 (我+8)</option>
+                    <option value="9">9 (我+9)</option>
+                    <option value="10">10 (我+10)</option>
+                    <option value="11">11 (我+11)</option>
+                    <option value="12">12 (我+12)</option>
+                </select>
+            </div>
+
+            <div id="family_container_zh">
+                <!-- 動態生成家庭成員欄位 -->
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">有準備出世的嬰兒嗎?</label>
+                <select class="input-data trigger-select" data-label="有準備出世的嬰兒嗎" onchange="toggleField(this, 'baby_due_zh', ['有'])">
+                    <option value="" disabled selected>請選擇</option>
+                    <option value="沒有">沒有</option>
+                    <option value="有">有</option>
+                </select>
+                <div id="baby_due_zh" class="hidden-field">
+                    <label>何時預產期？</label>
+                    <select class="input-data sub-input" data-label="嬰兒預產期">
+                        <option value="" disabled selected>請選擇</option>
+                        <option value="一月">一月</option>
+                        <option value="二月">二月</option>
+                        <option value="三月">三月</option>
+                        <option value="四月">四月</option>
+                        <option value="五月">五月</option>
+                        <option value="六月">六月</option>
+                        <option value="七月">七月</option>
+                        <option value="八月">八月</option>
+                        <option value="九月">九月</option>
+                        <option value="十月">十月</option>
+                        <option value="十一月">十一月</option>
+                        <option value="十二月">十二月</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="form-group">
+                <label class="label-bold">以上任何家庭成員，現時有聘用其他外傭 或 未來3個月 會聘用其他新外傭嗎？(包括其他住所)</label>
+                <select class="input-data trigger-select" data-label="有聘用其他外傭嗎" onchange="toggleField(this, 'old_helper_count_container_zh', ['有'])">
+                    <option value="" disabled selected>請選擇</option>
+                    <option value="沒有">沒有</option>
+                    <option value="有">有</option>
+                </select>
+                <div id="old_helper_count_container_zh" class="hidden-field">
+                    <label class="label-bold">多少位舊外傭？</label>
+                    <select class="input-data sub-input" id="old_helper_count_zh" data-label="舊外傭數量" onchange="generateHelperFields('zh', this.value)">
+                        <option value="" disabled selected>請選擇</option>
+                        <!-- JS 填充 1-13 -->
+                    </select>
+                </div>
+            </div>
+
+            <div id="helper_container_zh">
+                <!-- 動態生成舊外傭欄位 -->
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="form-group">
+                <label class="label-bold">要洗車?</label>
+                <select class="input-data" data-label="要洗車">
+                    <option value="" disabled selected>請選擇</option>
+                    <option value="沒有">沒有</option>
+                    <option value="有">有</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">有狗?</label>
+                <select class="input-data trigger-select" data-label="有狗" onchange="toggleField(this, 'dog_count_zh', ['有'])">
+                    <option value="" disabled selected>請選擇</option>
+                    <option value="沒有">沒有</option>
+                    <option value="有">有</option>
+                </select>
+                <div id="dog_count_zh" class="hidden-field">
+                    <label>多少狗？</label>
+                    <input type="number" inputmode="decimal" class="input-data sub-input" data-label="狗數量">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">有貓?</label>
+                <select class="input-data trigger-select" data-label="有貓" onchange="toggleField(this, 'cat_count_zh', ['有'])">
+                    <option value="" disabled selected>請選擇</option>
+                    <option value="沒有">沒有</option>
+                    <option value="有">有</option>
+                </select>
+                <div id="cat_count_zh" class="hidden-field">
+                    <label>多少貓？</label>
+                    <input type="number" inputmode="decimal" class="input-data sub-input" data-label="貓數量">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">有其他寵物?</label>
+                <select class="input-data trigger-select" data-label="有其他寵物" onchange="toggleField(this, 'other_pet_zh', ['有'])">
+                    <option value="" disabled selected>請選擇</option>
+                    <option value="沒有">沒有</option>
+                    <option value="有">有</option>
+                </select>
+                <div id="other_pet_zh" class="hidden-field">
+                    <label>什麼寵物和數量？</label>
+                    <input type="text" class="input-data sub-input" data-label="其他寵物詳情">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">外傭其他工作或備註？</label>
+                <textarea class="input-data" data-label="備註" rows="4"></textarea>
+            </div>
+
+            <button class="submit-btn" onclick="showPreview('zh')">填寫完成</button>
+            <div class="version-container">
+                <span class="version-label">V1.2</span>
+            </div>
+        </div>
+
+        <!-- ================= 英文表格 (English Form) ================= -->
+        <div id="form-en" class="form-section">
+            <h1>Horizon Employment Agency</h1>
+            <div class="intro-text">
+《Employer Information Form》
+1️⃣ All information below will be filled into the employment contract and Immigration Department forms.
+2️⃣ If unsure, leave a blank and provide later.
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">Employer Full Name</label>
+                <input type="text" class="input-data" data-label="Employer Full Name">
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">Contract Address (Helper's Work & Residence)</label>
+                <textarea class="input-data" data-label="Contract Address"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">Housing Type</label>
+                <select class="input-data" data-label="Housing Type">
+                    <option value="" disabled selected>Please Select</option>
+                    <option value="Flat">Flat</option>
+                    <option value="Detached house">Detached house</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">House Size, Area (Sq. Ft.)</label>
+                <input type="number" inputmode="decimal" class="input-data" data-label="House Size">
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">Number of Bedrooms (Including Maid's Room)</label>
+                <input type="number" inputmode="decimal" class="input-data" data-label="Bedrooms">
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">Employer Nationality</label>
+                <input type="text" class="input-data" data-label="Nationality">
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">Occupation</label>
+                <input type="text" class="input-data" data-label="Occupation">
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">Employer Average Monthly Income</label>
+                <input type="number" inputmode="decimal" class="input-data" data-label="Employer Average Monthly Income">
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">Maid Room (Single Room)</label>
+                <select class="input-data trigger-select" data-label="Maid Room" onchange="handleRoomEn(this)">
+                    <option value="" disabled selected>Please Select</option>
+                    <option value="Yes, separate room">Yes, separate room</option>
+                    <option value="Share room with child">Share room with child</option>
+                    <option value="Share room with elderly">Share room with elderly</option>
+                    <option value="Share room with female employer">Share room with female employer</option>
+                    <option value="Share room with another helper">Share room with another helper</option>
+                    <option value="Other">Other</option>
+                </select>
+                <div id="room_details_en" class="hidden-field">
+                    <!-- Dynamic content -->
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">New Helper Monthly Salary</label>
+                <select class="input-data trigger-select" data-label="Salary" onchange="toggleField(this, 'salary_other_en', ['Other'])">
+                    <option value="" disabled selected>Please Select</option>
+                    <option value="Minimum Wage">Minimum Wage</option>
+                    <option value="Other">Other</option>
+                </select>
+                <div id="salary_other_en" class="hidden-field">
+                    <label>Please enter other salary</label>
+                    <input type="number" inputmode="decimal" class="input-data sub-input" data-label="Custom Salary">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">New Helper Food Allowance</label>
+                <select class="input-data trigger-select" data-label="Food Allowance" onchange="toggleField(this, 'food_allowance_en', ['With Allowance'])">
+                    <option value="" disabled selected>Please Select</option>
+                    <option value="No Allowance, Share Food">No Allowance, Share Food</option>
+                    <option value="With Allowance">With Allowance</option>
+                </select>
+                <div id="food_allowance_en" class="hidden-field">
+                    <label>Please enter allowance amount</label>
+                    <input type="number" inputmode="decimal" class="input-data sub-input" data-label="Allowance Amount">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">New Helper Application Type</label>
+                <select class="input-data trigger-select" data-label="Application Type" onchange="handleAppTypeEn(this)">
+                    <option value="" disabled selected>Please Select</option>
+                    <option value="Local Finish Contract／Special case／Contract renewal">Local Finish Contract／Special case／Contract renewal</option>
+                    <option value="Overseas Helper">Overseas Helper</option>
+                </select>
+                <div id="app_type_local_en" class="hidden-field">
+                    <label class="label-bold">Work Arrangement</label>
+                    <select class="input-data sub-input" data-label="Work Arrangement" onchange="handleLocalWorkEn(this)">
+                        <option value="" disabled selected>Please Select</option>
+                        <option value="Work First, Defer Home Vacation">Work First, Defer Home Vacation</option>
+                        <option value="Home Vacation First, Work Later">Home Vacation First, Work Later</option>
+                    </select>
+                    <div id="local_leave_en" class="hidden-field">
+                        <label>For How Many Days?</label>
+                        <input type="number" inputmode="decimal" class="input-data sub-input" data-label="Days">
+                    </div>
+                </div>
+                <div id="app_type_overseas_en" class="hidden-field">
+                    <label class="label-bold">Work Arrangement</label>
+                    <select class="input-data sub-input" data-label="Overseas Work Arrangement" onchange="handleOverseasWorkEn(this)">
+                        <option value="" disabled selected>Please Select</option>
+                        <option value="ASAP (within 4 months)">ASAP (within 4 months)</option>
+                        <option value="Arrive in specific month">Arrive in specific month</option>
+                    </select>
+                    <div id="overseas_month_en" class="hidden-field">
+                        <label>Which month?</label>
+                        <select class="input-data sub-input" data-label="Arrival Month">
+                            <option value="" disabled selected>Please Select</option>
+                            <option value="January">January</option>
+                            <option value="February">February</option>
+                            <option value="March">March</option>
+                            <option value="April">April</option>
+                            <option value="May">May</option>
+                            <option value="June">June</option>
+                            <option value="July">July</option>
+                            <option value="August">August</option>
+                            <option value="September">September</option>
+                            <option value="October">October</option>
+                            <option value="November">November</option>
+                            <option value="December">December</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="form-group">
+                <label class="label-bold">Besides You (the Employer), How Many Family Members Live at The Contract Address?</label>
+                <select class="input-data" id="family_count_en" data-label="Family Members Count" onchange="generateFamilyFields('en', this.value)">
+                    <option value="" disabled selected>Please Select</option>
+                    <option value="0">0 (Only me)</option>
+                    <option value="1">1 (Me+1)</option>
+                    <option value="2">2 (Me+2)</option>
+                    <option value="3">3 (Me+3)</option>
+                    <option value="4">4 (Me+4)</option>
+                    <option value="5">5 (Me+5)</option>
+                    <option value="6">6 (Me+6)</option>
+                    <option value="7">7 (Me+7)</option>
+                    <option value="8">8 (Me+8)</option>
+                    <option value="9">9 (Me+9)</option>
+                    <option value="10">10 (Me+10)</option>
+                    <option value="11">11 (Me+11)</option>
+                    <option value="12">12 (Me+12)</option>
+                </select>
+            </div>
+
+            <div id="family_container_en">
+                <!-- Dynamic Fields -->
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">Expecting Newborn Baby?</label>
+                <select class="input-data trigger-select" data-label="Expecting Baby" onchange="toggleField(this, 'baby_due_en', ['Yes'])">
+                    <option value="" disabled selected>Please Select</option>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+                <div id="baby_due_en" class="hidden-field">
+                    <label>Estimated Date of Delivery</label>
+                    <select class="input-data sub-input" data-label="Due Date">
+                        <option value="" disabled selected>Please Select</option>
+                        <option value="January">January</option>
+                        <option value="February">February</option>
+                        <option value="March">March</option>
+                        <option value="April">April</option>
+                        <option value="May">May</option>
+                        <option value="June">June</option>
+                        <option value="July">July</option>
+                        <option value="August">August</option>
+                        <option value="September">September</option>
+                        <option value="October">October</option>
+                        <option value="November">November</option>
+                        <option value="December">December</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="form-group">
+                <label class="label-bold">Are Any of the Aforementioned Family Members Currently Employing, or Planning to Hire Other New Helpers Within The Next 3 Months? (This Includes Helpers in Other Residences of The Family Members)</label>
+                <select class="input-data trigger-select" data-label="Other Helper" onchange="toggleField(this, 'old_helper_count_container_en', ['Yes'])">
+                    <option value="" disabled selected>Please Select</option>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+                <div id="old_helper_count_container_en" class="hidden-field">
+                    <label class="label-bold">How Many Old Helpers?</label>
+                    <select class="input-data sub-input" id="old_helper_count_en" data-label="Old Helper Count" onchange="generateHelperFields('en', this.value)">
+                        <option value="" disabled selected>Please Select</option>
+                        <!-- JS 1-13 -->
+                    </select>
+                </div>
+            </div>
+
+            <div id="helper_container_en">
+                <!-- Dynamic Helper Fields -->
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="form-group">
+                <label class="label-bold">Car Wash?</label>
+                <select class="input-data" data-label="Car Wash">
+                    <option value="" disabled selected>Please Select</option>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">Dogs?</label>
+                <select class="input-data trigger-select" data-label="Dogs" onchange="toggleField(this, 'dog_count_en', ['Yes'])">
+                    <option value="" disabled selected>Please Select</option>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+                <div id="dog_count_en" class="hidden-field">
+                    <label>How many?</label>
+                    <input type="number" inputmode="decimal" class="input-data sub-input" data-label="Dog Count">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">Cats?</label>
+                <select class="input-data trigger-select" data-label="Cats" onchange="toggleField(this, 'cat_count_en', ['Yes'])">
+                    <option value="" disabled selected>Please Select</option>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+                <div id="cat_count_en" class="hidden-field">
+                    <label>How many?</label>
+                    <input type="number" inputmode="decimal" class="input-data sub-input" data-label="Cat Count">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">Other Pets?</label>
+                <select class="input-data trigger-select" data-label="Other Pets" onchange="toggleField(this, 'other_pet_en', ['Yes'])">
+                    <option value="" disabled selected>Please Select</option>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+                <div id="other_pet_en" class="hidden-field">
+                    <label>Pet Type and Quantity?</label>
+                    <input type="text" class="input-data sub-input" data-label="Other Pet Details">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="label-bold">Other Duties or Remarks?</label>
+                <textarea class="input-data" data-label="Remarks" rows="4"></textarea>
+            </div>
+
+            <button class="submit-btn" onclick="showPreview('en')">Finish</button>
+            <div class="version-container">
+                <span class="version-label">V1.2</span>
+            </div>
+        </div>
+
+        <!-- ================= 預覽頁面 (Preview Section) ================= -->
+        <div id="preview-section" class="form-section">
+            <h1>預覽 (Preview)</h1>
+            <div id="preview-content"></div>
+            
+            <button class="submit-btn whatsapp-btn" onclick="exportToWhatsApp()">匯出文字和 WhatsApp 本公司</button>
+            <button class="submit-btn" style="background-color: #666; margin-top: 15px;" onclick="goBack()">返回修改 (Back)</button>
+        </div>
+    </div>
+
+    <script>
+        let currentLang = 'zh';
+
+        // 初始化：填充舊外傭數量選擇器 (1-13)
+        function initHelperCounts() {
+            const counts = [1,2,3,4,5,6,7,8,9,10,11,12,13];
+            ['zh', 'en'].forEach(lang => {
+                const select = document.getElementById(`old_helper_count_${lang}`);
+                counts.forEach(num => {
+                    const option = document.createElement("option");
+                    option.value = num;
+                    option.text = num;
+                    select.appendChild(option);
+                });
+            });
+        }
+        initHelperCounts();
+
+        // 頁面載入時回復資料
+        window.addEventListener('load', () => {
+            loadFromStorage();
+        });
+
+        // 自動儲存邏輯
+        function saveToStorage() {
+            const data = {};
+            // 儲存所有 input-data 的值
+            document.querySelectorAll('.input-data').forEach((input, index) => {
+                // 使用 data-label 和 index 組合來確保唯一性 (因為中英文 data-label 可能重複或不同)
+                // 為了跨語言保存？不，中英文表單欄位是分開的。
+                // 簡單起見，我們遍歷所有 .input-data 並根據其在 DOM 的順序或 ID 來存儲
+                // 但因為有動態欄位，僅靠順序不可靠。
+                // 我們先儲存「關鍵」動態變數 (家庭成員數、舊外傭數)
+                
+                // 為了精確，我們給所有靜態輸入框和動態產生的輸入框分配一個標識
+                // 但這裡為了簡單有效，我們把整個表單狀態序列化
+            });
+
+            // 實作策略：
+            // 1. 儲存核心計數器 (family_count_zh, family_count_en, etc.)
+            // 2. 儲存所有有值的 input (key: data-label + lang context)
+            
+            const storageData = {
+                family_count_zh: document.getElementById('family_count_zh').value,
+                family_count_en: document.getElementById('family_count_en').value,
+                old_helper_count_zh: document.getElementById('old_helper_count_zh').value,
+                old_helper_count_en: document.getElementById('old_helper_count_en').value,
+                fields: []
+            };
+
+            const inputs = document.querySelectorAll('.input-data');
+            inputs.forEach(input => {
+                // 找出該 input 屬於哪個語言區塊
+                const parent = input.closest('#form-zh') ? 'zh' : (input.closest('#form-en') ? 'en' : 'unknown');
+                const label = input.getAttribute('data-label');
+                
+                // 為了處理動態欄位，我們需要更具體的路徑。
+                // 這裡使用簡單的 "label + index" 或者僅存儲值
+                // 由於動態欄位是按順序生成的，我們可以使用它們在各自容器內的順序
+                
+                storageData.fields.push({
+                    lang: parent,
+                    label: label,
+                    value: input.value,
+                    // 紀錄是否為 sub-input，幫助辨識隱藏欄位值
+                    isSub: input.classList.contains('sub-input') 
+                });
+            });
+
+            localStorage.setItem('formData_v1.2', JSON.stringify(storageData));
+        }
+
+        function loadFromStorage() {
+            const dataStr = localStorage.getItem('formData_v1.2');
+            if (!dataStr) return;
+            
+            const data = JSON.parse(dataStr);
+
+            // 1. 恢復計數器並觸發生成欄位
+            if(data.family_count_zh) {
+                const el = document.getElementById('family_count_zh');
+                el.value = data.family_count_zh;
+                generateFamilyFields('zh', data.family_count_zh);
+            }
+            if(data.family_count_en) {
+                const el = document.getElementById('family_count_en');
+                el.value = data.family_count_en;
+                generateFamilyFields('en', data.family_count_en);
+            }
+            if(data.old_helper_count_zh) {
+                const el = document.getElementById('old_helper_count_zh');
+                el.value = data.old_helper_count_zh;
+                generateHelperFields('zh', data.old_helper_count_zh);
+            }
+            if(data.old_helper_count_en) {
+                const el = document.getElementById('old_helper_count_en');
+                el.value = data.old_helper_count_en;
+                generateHelperFields('en', data.old_helper_count_en);
+            }
+
+            // 2. 恢復所有欄位值
+            // 我們遍歷 DOM 中的 inputs，嘗試從 storage 找到對應值
+            // 這是一個簡單的對應，假設順序不變
+            const domInputs = document.querySelectorAll('.input-data');
+            let dataIndex = 0;
+            
+            // 由於動態生成的欄位現在已經存在 DOM 中 (因為步驟 1)，我們可以按順序匹配
+            if (data.fields && data.fields.length > 0) {
+                 // 注意：這種順序匹配依賴於 DOM 結構在存取時完全一致
+                 // 重新抓取一次 DOM，確保包含動態欄位
+                 const currentInputs = document.querySelectorAll('.input-data');
+                 
+                 // 簡單的比對：如果 label 和 lang 匹配，則填入
+                 // 更好的方式：迭代 storage 紀錄，嘗試找到對應的 DOM 元素
+                 
+                 // 我們使用由上而下的順序填充
+                 let fieldPtr = 0;
+                 currentInputs.forEach(input => {
+                     if (fieldPtr >= data.fields.length) return;
+                     
+                     const saved = data.fields[fieldPtr];
+                     const parent = input.closest('#form-zh') ? 'zh' : (input.closest('#form-en') ? 'en' : 'unknown');
+                     const label = input.getAttribute('data-label');
+
+                     // 如果當前 DOM 元素與儲存的紀錄匹配
+                     if (saved.lang === parent && saved.label === label) {
+                         input.value = saved.value;
+                         
+                         // 如果是 select，觸發 change 以顯示隱藏欄位
+                         if (input.tagName === 'SELECT') {
+                             input.dispatchEvent(new Event('change'));
+                         }
+                         
+                         fieldPtr++;
+                     } else {
+                         // 如果不匹配，可能是 DOM 結構變了或跳過了某些元素，嘗試尋找下一個
+                         // 這裡做簡單的同步，假設順序一致
+                         // 如果不一致，這個簡單的 auto-save 可能會錯位，但在單一檔案且無其他變動下通常可行
+                     }
+                 });
+            }
+        }
+
+        // 綁定所有 input 的 change 事件以觸發儲存
+        // 使用事件委派
+        document.addEventListener('change', (e) => {
+            if (e.target.classList.contains('input-data')) {
+                saveToStorage();
+            }
+        });
+        document.addEventListener('input', (e) => {
+             // 為了避免過於頻繁寫入 storage，可以用 debounce，這裡簡單處理：僅在 blur 或延遲後存
+             // 這裡只在 change 存比較效能好，但 text input 需要 blur 才會觸發 change
+             // 如果希望即時存，可以用 input 事件但加 debounce。
+             // 這裡簡單起見，保留 change，對於 text input 需離開焦點才存。
+             if (e.target.classList.contains('input-data')) {
+                // saveToStorage(); // 如果需要即時存可開啟
+             }
+        });
+        // 針對 text input 的 blur 儲存
+        document.addEventListener('focusout', (e) => {
+             if (e.target.classList.contains('input-data')) {
+                saveToStorage();
+             }
+        });
+
+
+        // 切換語言
+        function switchLang(lang) {
+            currentLang = lang;
+            document.getElementById('form-zh').classList.remove('active');
+            document.getElementById('form-en').classList.remove('active');
+            document.getElementById('preview-section').classList.remove('active');
+            
+            document.getElementById(`form-${lang}`).classList.add('active');
+
+            document.getElementById('btn-zh').classList.remove('active');
+            document.getElementById('btn-en').classList.remove('active');
+            document.getElementById(`btn-${lang}`).classList.add('active');
+            
+            window.scrollTo(0,0);
+        }
+
+        // 通用：顯示/隱藏欄位
+        function toggleField(trigger, targetId, validValues) {
+            const target = document.getElementById(targetId);
+            const value = trigger.value;
+            
+            if (validValues.includes(value)) {
+                target.style.display = 'block';
+            } else {
+                target.style.display = 'none';
+                const inputs = target.querySelectorAll('input, select');
+                inputs.forEach(input => input.value = '');
+            }
+        }
+
+        // 工人房邏輯 (中文)
+        function handleRoomZh(trigger) {
+            const target = document.getElementById('room_details_zh');
+            const value = trigger.value;
+            let html = '';
+
+            if (value === '有工人房') {
+                html = `<label>工人房面積</label><input type="number" inputmode="decimal" class="input-data sub-input" data-label="工人房面積">`;
+            } else if (value === '與小孩同房') {
+                html = `<label>與哪位小孩？</label><input type="text" class="input-data sub-input" data-label="與哪位小孩同房">`;
+            } else if (value === '其他') {
+                html = `<label>請填寫其他住宿安排</label><input type="text" class="input-data sub-input" data-label="其他住宿安排">`;
+            }
+
+            target.innerHTML = html;
+            target.style.display = html ? 'block' : 'none';
+        }
+
+        // 工人房邏輯 (英文)
+        function handleRoomEn(trigger) {
+            const target = document.getElementById('room_details_en');
+            const value = trigger.value;
+            let html = '';
+
+            if (value === 'Yes, separate room') {
+                html = `<label>Room Size</label><input type="number" inputmode="decimal" class="input-data sub-input" data-label="Maid Room Size">`;
+            } else if (value === 'Share room with child') {
+                html = `<label>Which Kid?</label><input type="text" class="input-data sub-input" data-label="Share with which kid">`;
+            } else if (value === 'Other') {
+                html = `<label>Please specify other arrangement</label><input type="text" class="input-data sub-input" data-label="Other Room Arrangement">`;
+            }
+
+            target.innerHTML = html;
+            target.style.display = html ? 'block' : 'none';
+        }
+
+        // 申請類別邏輯
+        function handleAppTypeZh(trigger) {
+            const val = trigger.value;
+            document.getElementById('app_type_local_zh').style.display = (val === '香港完約、特別個案或續約') ? 'block' : 'none';
+            document.getElementById('app_type_overseas_zh').style.display = (val === '海外外傭') ? 'block' : 'none';
+        }
+        function handleAppTypeEn(trigger) {
+            const val = trigger.value;
+            document.getElementById('app_type_local_en').style.display = (val === 'Local Finish Contract／Special case／Contract renewal') ? 'block' : 'none';
+            document.getElementById('app_type_overseas_en').style.display = (val === 'Overseas Helper') ? 'block' : 'none';
+        }
+
+        // 上班安排邏輯
+        function handleLocalWorkZh(trigger) {
+            document.getElementById('local_leave_zh').style.display = (trigger.value === '先回鄉，後上班') ? 'block' : 'none';
+        }
+        function handleLocalWorkEn(trigger) {
+            document.getElementById('local_leave_en').style.display = (trigger.value === 'Home Vacation First, Work Later') ? 'block' : 'none';
+        }
+        function handleOverseasWorkZh(trigger) {
+            document.getElementById('overseas_month_zh').style.display = (trigger.value === '安排在某月份飛香港') ? 'block' : 'none';
+        }
+        function handleOverseasWorkEn(trigger) {
+            document.getElementById('overseas_month_en').style.display = (trigger.value === 'Arrive in specific month') ? 'block' : 'none';
+        }
+
+        // 生成家庭成員
+        function generateFamilyFields(lang, count) {
+            const container = document.getElementById(`family_container_${lang}`);
+            container.innerHTML = ''; 
+            count = parseInt(count);
+            if (!count) return;
+
+            const relationsZh = ["父親","母親","夫婦","兒子","女兒","哥哥","弟弟","姊姊","妹妹","外父","外母","兒媳","女婿","其他"];
+            const relationsEn = ["Father","Mother","Spouse","Son","Daughter","Brother","Sister","Father-in-law","Mother-in-law","Daughter-in-law","Son-in-law","Other"]; // Removed duplicates
+
+            for (let i = 1; i <= count; i++) {
+                const div = document.createElement('div');
+                div.className = 'subsection-title';
+                div.innerHTML = lang === 'zh' ? `第 ${i} 位成員` : `Member ${i}`;
+
+                // 構建關係選項
+                let relationOptions = `<option value="" disabled selected>${lang === 'zh'?'請選擇':'Please Select'}</option>`;
+                const relations = lang === 'zh' ? relationsZh : relationsEn;
+                relations.forEach(r => relationOptions += `<option value="${r}">${r}</option>`);
+
+                const html = `
+                    <div class="form-group">
+                        <label class="label-bold">${lang==='zh'?'全名':'Full Name'}</label>
+                        <input type="text" class="input-data" data-label="${lang==='zh'?`第${i}位成員全名`:`Member ${i} Name`}">
+                    </div>
+                    <div class="form-group">
+                        <label class="label-bold">${lang==='zh'?'出生年份':'Year of Birth'}</label>
+                        <input type="number" inputmode="decimal" class="input-data" data-label="${lang==='zh'?`第${i}位出生年份`:`Member ${i} YOB`}">
+                    </div>
+                    <div class="form-group">
+                        <label class="label-bold">${lang==='zh'?'與僱主關係':'Relationship With The Employer'}</label>
+                        <select class="input-data trigger-select" data-label="${lang==='zh'?`第${i}位關係`:`Member ${i} Relationship`}" onchange="toggleFamilyOther(this)">
+                            ${relationOptions}
+                        </select>
+                        <div class="hidden-field" style="display:none;">
+                            <label>${lang==='zh'?'請填寫關係':'Please specify relationship'}</label>
+                            <input type="text" class="input-data sub-input" data-label="${lang==='zh'?`第${i}位關係(其他)`:`Member ${i} Rel(Other)`}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="label-bold">${lang==='zh'?'香港身份證號碼':'HKID Number'}</label>
+                        <input type="text" class="input-data" data-label="${lang==='zh'?`第${i}位身份證`:`Member ${i} HKID`}">
+                    </div>
+                `;
+
+                const groupDiv = document.createElement('div');
+                groupDiv.innerHTML = html;
+                container.appendChild(div);
+                container.appendChild(groupDiv);
+            }
+        }
+
+        function toggleFamilyOther(select) {
+            const hiddenDiv = select.nextElementSibling;
+            if (select.value === '其他' || select.value === 'Other') {
+                hiddenDiv.style.display = 'block';
+            } else {
+                hiddenDiv.style.display = 'none';
+                hiddenDiv.querySelector('input').value = '';
+            }
+        }
+
+        // 生成舊外傭 (含交接期)
+        function generateHelperFields(lang, count) {
+            const container = document.getElementById(`helper_container_${lang}`);
+            container.innerHTML = '';
+            count = parseInt(count);
+            if (!count) return;
+
+            for(let i=1; i<=count; i++) {
+                const div = document.createElement('div');
+                div.className = 'subsection-title';
+                div.innerHTML = lang === 'zh' ? `第 ${i} 位舊外傭` : `Old Helper ${i}`;
+
+                // 交接期 HTML
+                const handoverHtmlZh = `
+                    <div class="form-group">
+                        <label class="label-bold">此舊外傭的安排</label>
+                        <select class="input-data trigger-select" data-label="舊外傭${i}安排" onchange="toggleHelperHandover(this)">
+                            <option value="" disabled selected>請選擇</option>
+                            <option value="繼續留用">繼續留用</option>
+                            <option value="舊外傭走，新外傭入">舊外傭走，新外傭入</option>
+                            <option value="想有交接期">想有交接期</option>
+                        </select>
+                        <div class="hidden-field" style="display:none;">
+                            <label>交接期多少日？</label>
+                            <input type="number" inputmode="decimal" class="input-data sub-input" data-label="舊外傭${i}交接期日數">
+                        </div>
+                    </div>
+                `;
+
+                const handoverHtmlEn = `
+                    <div class="form-group">
+                        <label class="label-bold">Arrangement For This Helper</label>
+                        <select class="input-data trigger-select" data-label="Helper ${i} Arrangement" onchange="toggleHelperHandover(this)">
+                            <option value="" disabled selected>Please Select</option>
+                            <option value="Keep employing">Keep employing</option>
+                            <option value="Old helper leaves, new helper starts">Old helper leaves, new helper starts</option>
+                            <option value="Want handover period">Want handover period</option>
+                        </select>
+                        <div class="hidden-field" style="display:none;">
+                            <label>How many days?</label>
+                            <input type="number" inputmode="decimal" class="input-data sub-input" data-label="Helper ${i} Handover Days">
+                        </div>
+                    </div>
+                `;
+
+                const htmlZh = `
+                    <div class="form-group">
+                        <label class="label-bold">舊外傭全名</label>
+                        <input type="text" class="input-data" data-label="舊外傭${i}全名">
+                    </div>
+                    <div class="form-group">
+                        <label class="label-bold">舊外傭身份證號碼</label>
+                        <input type="text" class="input-data" data-label="舊外傭${i}身份證">
+                    </div>
+                    <div class="form-group">
+                        <label class="label-bold">舊合約編號</label>
+                        <input type="text" class="input-data" data-label="舊外傭${i}合約編號">
+                    </div>
+                    <div class="form-group">
+                        <label class="label-bold">簽證獲批准在港逗留期限 (即合約何時完結)</label>
+                        <input type="date" class="input-data" data-label="舊外傭${i}逗留期限">
+                    </div>
+                    <div class="form-group">
+                        <label class="label-bold">哪位家庭成員聘用</label>
+                        <input type="text" class="input-data" data-label="舊外傭${i}聘用人">
+                    </div>
+                    ${handoverHtmlZh}
+                `;
+
+                const htmlEn = `
+                    <div class="form-group">
+                        <label class="label-bold">Helper Full Name</label>
+                        <input type="text" class="input-data" data-label="Helper ${i} Name">
+                    </div>
+                    <div class="form-group">
+                        <label class="label-bold">Helper HKID Number</label>
+                        <input type="text" class="input-data" data-label="Helper ${i} HKID">
+                    </div>
+                    <div class="form-group">
+                        <label class="label-bold">Contract Number</label>
+                        <input type="text" class="input-data" data-label="Helper ${i} Contract No">
+                    </div>
+                    <div class="form-group">
+                        <label class="label-bold">Visa Expiry (Contract End Date)</label>
+                        <input type="date" class="input-data" data-label="Helper ${i} Visa Expiry">
+                    </div>
+                    <div class="form-group">
+                        <label class="label-bold">Which Family Member Employed</label>
+                        <input type="text" class="input-data" data-label="Helper ${i} Employer">
+                    </div>
+                    ${handoverHtmlEn}
+                `;
+
+                const groupDiv = document.createElement('div');
+                groupDiv.innerHTML = lang === 'zh' ? htmlZh : htmlEn;
+
+                container.appendChild(div);
+                container.appendChild(groupDiv);
+            }
+        }
+
+        function toggleHelperHandover(select) {
+            const hiddenDiv = select.nextElementSibling;
+            if (select.value === '想有交接期' || select.value === 'Want handover period') {
+                hiddenDiv.style.display = 'block';
+            } else {
+                hiddenDiv.style.display = 'none';
+                hiddenDiv.querySelector('input').value = '';
+            }
+        }
+
+        // ================= 預覽邏輯 =================
+        function showPreview(lang) {
+            currentLang = lang;
+            const formId = `form-${lang}`;
+            const container = document.getElementById(formId);
+            const previewSection = document.getElementById('preview-section');
+            const previewContent = document.getElementById('preview-content');
+            
+            // 隱藏表單，顯示預覽
+            container.classList.remove('active');
+            previewSection.classList.add('active');
+            
+            // 隱藏 Navbar 避免點擊跳回
+            document.getElementById('main-nav').style.display = 'none';
+
+            // 收集所有資料
+            let html = '';
+            const allInputs = container.querySelectorAll('.input-data');
+            
+            allInputs.forEach(input => {
+                if(input.offsetParent === null) return;
+
+                const label = input.getAttribute('data-label');
+                let value = input.value.trim();
+                
+                const displayValue = value ? value : `<span class="preview-empty">(${lang==='zh'?'未填寫':'Empty'})</span>`;
+
+                html += `
+                    <div class="preview-item">
+                        <span class="preview-label">${label}</span>
+                        <span class="preview-value">${displayValue}</span>
+                    </div>
+                `;
+            });
+
+            previewContent.innerHTML = html;
+            window.scrollTo(0,0);
+        }
+
+        function goBack() {
+            document.getElementById('preview-section').classList.remove('active');
+            document.getElementById(`form-${currentLang}`).classList.add('active');
+            document.getElementById('main-nav').style.display = 'flex';
+            window.scrollTo(0,0);
+        }
+
+        // 匯出功能
+        function exportToWhatsApp() {
+            const previewItems = document.querySelectorAll('.preview-item');
+            let message = currentLang === 'zh' ? "*維港專業僱傭中心 - 資料表格*%0A%0A" : "*Horizon Employment Agency Form*%0A%0A";
+            
+            previewItems.forEach(item => {
+                const label = item.querySelector('.preview-label').innerText;
+                let value = item.querySelector('.preview-value').innerText;
+                
+                if (value.includes('未填寫') || value.includes('Empty')) {
+                    value = ""; 
+                }
+
+                if(value && value.trim() !== "") {
+                    message += `*${label}:* ${value}%0A`;
+                }
+            });
+
+            const url = `https://wa.me/85296111003?text=${message}`;
+            window.open(url, '_blank');
+        }
+
+    </script>
+</body>
+</html>
