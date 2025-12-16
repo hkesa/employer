@@ -238,7 +238,7 @@
             font-style: italic;
         }
 
-        /* 版本號 V1.3 - 白色底色，隱藏於畫面 (實際上是白字白底) */
+        /* 版本號 V1.4 - 白色底色，隱藏於畫面 */
         .version-label {
             color: white; 
             text-align: center;
@@ -247,8 +247,8 @@
             background-color: white; 
             border-radius: 4px;
             display: inline-block;
-            font-size: 14px !important; /* 雖然隱藏，但防止撐開太大 */
-            opacity: 0; /* 完全隱藏 */
+            font-size: 14px !important;
+            opacity: 0; 
             pointer-events: none;
         }
         
@@ -477,7 +477,7 @@
                     </select>
                     
                     <div style="margin-top: 25px;">
-                        <label>嬰兒</label>
+                        <label>嬰兒性別</label>
                         <select class="input-data sub-input" data-label="嬰兒性別/類型">
                             <option value="" disabled selected>請選擇</option>
                             <option value="男孩">男孩</option>
@@ -569,7 +569,7 @@
 
             <button class="submit-btn" onclick="showPreview('zh')">填寫完成</button>
             <div class="version-container">
-                <span class="version-label">V1.3</span>
+                <span class="version-label">V1.4</span>
             </div>
         </div>
 
@@ -781,7 +781,7 @@
                     </select>
 
                     <div style="margin-top: 25px;">
-                        <label>Child</label>
+                        <label>Baby's Gender</label>
                         <select class="input-data sub-input" data-label="Baby Gender/Type">
                             <option value="" disabled selected>Please Select</option>
                             <option value="Boy">Boy</option>
@@ -873,7 +873,7 @@
 
             <button class="submit-btn" onclick="showPreview('en')">Finish</button>
             <div class="version-container">
-                <span class="version-label">V1.3</span>
+                <span class="version-label">V1.4</span>
             </div>
         </div>
 
@@ -937,11 +937,11 @@
                 });
             });
 
-            localStorage.setItem('formData_v1.3', JSON.stringify(storageData));
+            localStorage.setItem('formData_v1.4', JSON.stringify(storageData));
         }
 
         function loadFromStorage() {
-            const dataStr = localStorage.getItem('formData_v1.3');
+            const dataStr = localStorage.getItem('formData_v1.4');
             if (!dataStr) return;
             
             const data = JSON.parse(dataStr);
@@ -1285,23 +1285,12 @@
                 backBtn.innerText = "Back to Edit";
             }
 
-            // 隱藏表單，顯示預覽
-            container.classList.remove('active');
-            previewSection.classList.add('active');
-            
-            // 隱藏 Navbar 避免點擊跳回
-            document.getElementById('main-nav').style.display = 'none';
-
-            // 收集所有資料 (無論是否隱藏，顯示所有有 offsetParent 的 或 所有問題)
-            // 需求：無論有填寫或無填寫，你也要將我第一頁的資料顯示
-            // 由於動態欄位可能被隱藏，但用戶想看"空白"表單？
-            // 我們只顯示「可見的」欄位，以避免邏輯錯誤 (例如沒選有狗卻顯示狗數量)
-            
+            // [修復] 在隱藏表單前，先收集資料！
             let html = '';
             const allInputs = container.querySelectorAll('.input-data');
             
             allInputs.forEach(input => {
-                // 只顯示可見的欄位，確保邏輯正確
+                // 只顯示可見的欄位 (邏輯判斷)
                 if(input.offsetParent === null) return;
 
                 const label = input.getAttribute('data-label');
@@ -1321,6 +1310,13 @@
             
             // 生成匯出按鈕
             generateExportButtons(lang);
+
+            // 隱藏表單，顯示預覽
+            container.classList.remove('active');
+            previewSection.classList.add('active');
+            
+            // 隱藏 Navbar 避免點擊跳回
+            document.getElementById('main-nav').style.display = 'none';
             
             window.scrollTo(0,0);
         }
@@ -1332,24 +1328,24 @@
             
             // 預先計算總文字
             const previewItems = document.querySelectorAll('.preview-item');
-            let fullMessage = lang === 'zh' ? "*維港專業僱傭中心 - 資料表格*%0A%0A" : "*Horizon Employment Agency Form*%0A%0A";
+            let fullMessage = lang === 'zh' ? "*維港專業僱傭中心 - 資料表格*\n\n" : "*Horizon Employment Agency Form*\n\n";
             
             let parts = [];
             let currentPart = fullMessage;
-            const limit = 1500; // 安全界限 (URL limit often ~2000)
+            const limit = 1500; // 安全界限
 
             previewItems.forEach(item => {
                 const label = item.querySelector('.preview-label').innerText;
                 let value = item.querySelector('.preview-value').innerText;
                 
                 if (value.includes('未填寫') || value.includes('Empty')) {
-                    value = " "; // 傳送空白或文字
+                    value = " "; 
                 }
                 
-                // 構建這一行的文字
-                let line = `*${label}:* ${value}%0A`;
+                // 構建這一行的文字，使用 \n 換行
+                let line = `*${label}:* ${value}\n`;
                 
-                // 檢查是否超過長度
+                // 檢查是否超過長度 (使用 encodeURI 後的長度估算會更準，但這裡用字符長度做保守估計)
                 if ((currentPart + line).length > limit) {
                     parts.push(currentPart);
                     currentPart = line; // 新的一段
@@ -1370,7 +1366,8 @@
                 btn.className = "submit-btn whatsapp-btn";
                 btn.innerText = btnText;
                 btn.onclick = function() {
-                    const url = `https://wa.me/85296111003?text=${parts[0]}`;
+                    // [修復] 使用 encodeURIComponent 處理所有特殊字符
+                    const url = `https://wa.me/85296111003?text=${encodeURIComponent(parts[0])}`;
                     window.open(url, '_blank');
                 };
                 btnContainer.appendChild(btn);
@@ -1382,7 +1379,7 @@
                     btn.innerText = `${btnText} (${index + 1}/${parts.length})`;
                     btn.style.marginTop = "10px";
                     btn.onclick = function() {
-                        const url = `https://wa.me/85296111003?text=${part}`;
+                        const url = `https://wa.me/85296111003?text=${encodeURIComponent(part)}`;
                         window.open(url, '_blank');
                     };
                     btnContainer.appendChild(btn);
