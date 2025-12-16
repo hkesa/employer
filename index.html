@@ -333,12 +333,12 @@
 
             <div class="form-group">
                 <label class="label-bold">僱主平均每月入息</label>
-                <input type="number" inputmode="decimal" class="input-data" data-label="僱主平均每月入息">
+                <input type="number" inputmode="decimal" class="input-data" data-label="僱主入息">
             </div>
 
             <div class="form-group">
                 <label class="label-bold">獨立工人房 (一人房間)</label>
-                <select class="input-data trigger-select" data-label="獨立工人房" onchange="handleRoomZh(this)">
+                <select class="input-data trigger-select" data-label="工人房" onchange="handleRoomZh(this)">
                     <option value="" disabled selected>請選擇</option>
                     <option value="有工人房">有工人房</option>
                     <option value="與小孩同房">與小孩同房</option>
@@ -354,7 +354,7 @@
 
             <div class="form-group">
                 <label class="label-bold">新外傭每月薪金</label>
-                <select class="input-data trigger-select" data-label="新外傭每月薪金" onchange="toggleField(this, 'salary_other_zh', ['其他'])">
+                <select class="input-data trigger-select" data-label="新外傭薪金" onchange="toggleField(this, 'salary_other_zh', ['其他'])">
                     <option value="" disabled selected>請選擇</option>
                     <option value="最低工資">最低工資</option>
                     <option value="其他">其他</option>
@@ -367,7 +367,7 @@
 
             <div class="form-group">
                 <label class="label-bold">新外傭每月膳食津貼</label>
-                <select class="input-data trigger-select" data-label="新外傭每月膳食津貼" onchange="toggleField(this, 'food_allowance_zh', ['有膳食津貼'])">
+                <select class="input-data trigger-select" data-label="新外傭膳食津貼" onchange="toggleField(this, 'food_allowance_zh', ['有膳食津貼'])">
                     <option value="" disabled selected>請選擇</option>
                     <option value="沒有膳津，一起吃">沒有膳津，一起吃</option>
                     <option value="有膳食津貼">有膳食津貼</option>
@@ -478,7 +478,7 @@
                     
                     <div style="margin-top: 25px;">
                         <label>嬰兒性別</label>
-                        <select class="input-data sub-input" data-label="嬰兒性別/類型">
+                        <select class="input-data sub-input" data-label="嬰兒性別">
                             <option value="" disabled selected>請選擇</option>
                             <option value="男孩">男孩</option>
                             <option value="女孩">女孩</option>
@@ -516,7 +516,7 @@
 
             <div class="form-group">
                 <label class="label-bold">要洗車?</label>
-                <select class="input-data" data-label="要洗車">
+                <select class="input-data" data-label="洗車">
                     <option value="" disabled selected>請選擇</option>
                     <option value="沒有">沒有</option>
                     <option value="有">有</option>
@@ -525,7 +525,7 @@
 
             <div class="form-group">
                 <label class="label-bold">有狗?</label>
-                <select class="input-data trigger-select" data-label="有狗" onchange="toggleField(this, 'dog_count_zh', ['有'])">
+                <select class="input-data trigger-select" data-label="狗" onchange="toggleField(this, 'dog_count_zh', ['有'])">
                     <option value="" disabled selected>請選擇</option>
                     <option value="沒有">沒有</option>
                     <option value="有">有</option>
@@ -538,7 +538,7 @@
 
             <div class="form-group">
                 <label class="label-bold">有貓?</label>
-                <select class="input-data trigger-select" data-label="有貓" onchange="toggleField(this, 'cat_count_zh', ['有'])">
+                <select class="input-data trigger-select" data-label="貓" onchange="toggleField(this, 'cat_count_zh', ['有'])">
                     <option value="" disabled selected>請選擇</option>
                     <option value="沒有">沒有</option>
                     <option value="有">有</option>
@@ -551,7 +551,7 @@
 
             <div class="form-group">
                 <label class="label-bold">有其他寵物?</label>
-                <select class="input-data trigger-select" data-label="有其他寵物" onchange="toggleField(this, 'other_pet_zh', ['有'])">
+                <select class="input-data trigger-select" data-label="其他寵物" onchange="toggleField(this, 'other_pet_zh', ['有'])">
                     <option value="" disabled selected>請選擇</option>
                     <option value="沒有">沒有</option>
                     <option value="有">有</option>
@@ -1039,7 +1039,7 @@
             if (value === '有工人房') {
                 html = `<label>工人房面積</label><input type="number" inputmode="decimal" class="input-data sub-input" data-label="工人房面積">`;
             } else if (value === '與小孩同房') {
-                html = `<label>與哪位小孩？</label><input type="text" class="input-data sub-input" data-label="與哪位小孩同房">`;
+                html = `<label>與哪位小孩？(例如：3歲女兒)</label><input type="text" class="input-data sub-input" data-label="與哪位小孩同房">`;
             } else if (value === '其他') {
                 html = `<label>請填寫其他住宿安排</label><input type="text" class="input-data sub-input" data-label="其他住宿安排">`;
             }
@@ -1131,7 +1131,7 @@
                     </div>
                     <div class="form-group">
                         <label class="label-bold">${lang==='zh'?'香港身份證號碼':'HKID Number'}</label>
-                        <input type="text" class="input-data" data-label="${lang==='zh'?`第${i}位身份證`:`Member ${i} HKID`}">
+                        <input type="text" class="input-data" data-label="${lang==='zh'?`第${i}位身份證號碼`:`Member ${i} HKID`}">
                     </div>
                 `;
 
@@ -1207,7 +1207,7 @@
                     </div>
                     <div class="form-group">
                         <label class="label-bold">舊外傭身份證號碼</label>
-                        <input type="text" class="input-data" data-label="舊外傭${i}身份證">
+                        <input type="text" class="input-data" data-label="舊外傭${i}身份證號碼">
                     </div>
                     <div class="form-group">
                         <label class="label-bold">舊合約編號</label>
@@ -1215,11 +1215,11 @@
                     </div>
                     <div class="form-group">
                         <label class="label-bold">簽證獲批准在港逗留期限 (即合約何時完結)</label>
-                        <input type="date" class="input-data" data-label="舊外傭${i}逗留期限">
+                        <input type="date" class="input-data" data-label="舊外傭${i}合約完結">
                     </div>
                     <div class="form-group">
                         <label class="label-bold">哪位家庭成員聘用</label>
-                        <input type="text" class="input-data" data-label="舊外傭${i}聘用人">
+                        <input type="text" class="input-data" data-label="舊外傭${i}的僱主">
                     </div>
                     ${handoverHtmlZh}
                 `;
